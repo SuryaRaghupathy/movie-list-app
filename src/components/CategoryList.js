@@ -1,7 +1,11 @@
+// CategoryList.js
+
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import TitleSelector from "./TitleSelector";
+import MovieSelector from "./MovieSelector";
+import FilmDetails from "./FilmDetails";
+
 const CategoryList = () => {
   const [isToggleOn1, setIsToggleOn1] = useState(false);
   const [isToggleOn2, setIsToggleOn2] = useState(false);
@@ -31,7 +35,7 @@ const CategoryList = () => {
               )}
             </div>
           </div>
-          <TitleSelector />
+          <MovieSelector /> {/* Use MovieSelector component here */}
         </li>
 
         <hr className="border-black" />
@@ -50,7 +54,17 @@ const CategoryList = () => {
               )}
             </div>
           </div>
+          <div
+            style={{
+              maxHeight: "80px",
+              overflowY: "hidden",
+              paddingRight: "10px",
+            }}
+          >
+            <FilmDetails /> {/* Use MovieSelector component here */}
+          </div>
         </li>
+
         <hr className="border-black" />
       </ul>
     </div>

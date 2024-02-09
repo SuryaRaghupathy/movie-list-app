@@ -1,8 +1,12 @@
+// FilmDetails.js
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PopUpDetails from "./PopUpDetails";
+import { FilmDetailsContext } from "./Context";
+import MovieSelector from "./MovieSelector";
 
 const FilmDetails = () => {
   const [filmDetails, setFilmDetails] = useState([]);
@@ -25,7 +29,7 @@ const FilmDetails = () => {
         const moviesArray = response.data || [];
         console.log(moviesArray);
         setFilmDetails(moviesArray);
-        setCopiedMoviesArray(moviesArray); // Directly pass moviesArray without spreading
+        setCopiedMoviesArray([...moviesArray]);
       } catch (error) {
         console.error(error);
       }
@@ -33,12 +37,11 @@ const FilmDetails = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log("copiedMoviesArray:", copiedMoviesArray);
-  }, [copiedMoviesArray]);
-
   return (
     <>
+      <FilmDetailsContext.Provider value={copiedMoviesArray}>
+        <MovieSelector /> {/* Use MovieSelector component here */}
+      </FilmDetailsContext.Provider>
       <div className="h-screen p-4 mb-2 overflow-hidden">
         <h2 className="font-bold text-lg mb-5">Film Details</h2>
         <div
