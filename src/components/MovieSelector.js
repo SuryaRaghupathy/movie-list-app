@@ -1,11 +1,10 @@
 // MovieSelector.js
-
-import React, { useContext } from "react";
-import { FilmDetailsContext } from "./Context";
+import React from "react";
 import MultipleSelect from "./TitleSelector";
 
-const MovieSelector = () => {
-  const movies = useContext(FilmDetailsContext);
+const MovieSelector = ({ movies }) => {
+  console.log(movies);
+  // Now you can use the "movies" prop within this component
 
   return <MultipleSelect movies={movies} />;
 };

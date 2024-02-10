@@ -1,18 +1,12 @@
 import React from "react";
 import CategoryList from "./CategoryList";
 import MovieList from "./MovieList";
+import { FilmDetailsProvider } from "./Context";
 
 const MainPage = () => {
   return (
-    <React.Fragment>
-      <style>
-        {`
-          body {
-            overflow: hidden;
-          }
-        `}
-      </style>
-      <div className="flex">
+    <FilmDetailsProvider>
+      <div className="flex overflow-hidden">
         <div className="w-1/4 p-4 h-screen bg-[#eee477]">
           <CategoryList />
         </div>
@@ -21,7 +15,7 @@ const MainPage = () => {
           <MovieList />
         </div>
       </div>
-    </React.Fragment>
+    </FilmDetailsProvider>
   );
 };
 

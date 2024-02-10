@@ -1,16 +1,13 @@
-// FilmDetails.js
-
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PopUpDetails from "./PopUpDetails";
 import { FilmDetailsContext } from "./Context";
-import MovieSelector from "./MovieSelector";
+import { mockData } from "../data/mockData";
 
 const FilmDetails = () => {
-  const [filmDetails, setFilmDetails] = useState([]);
-  const [copiedMoviesArray, setCopiedMoviesArray] = useState([]);
+  const [filmDetails, setFilmDetails] = useContext(FilmDetailsContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,29 +16,32 @@ const FilmDetails = () => {
         url: "https://imdb-top-100-movies.p.rapidapi.com/",
         headers: {
           "X-RapidAPI-Key":
-            "9090a5ca60msh62c3aed47d41960p17b592jsn864effd55a3f",
+            "b9b0bbd5eemsh8f17141f1702292p1608c4jsne23885f5e4b8",
           "X-RapidAPI-Host": "imdb-top-100-movies.p.rapidapi.com",
+          "Retry-After": "3600",
         },
       };
 
       try {
         const response = await axios.request(options);
-        const moviesArray = response.data || [];
-        console.log(moviesArray);
+        let moviesArray = response.data || [];
+        moviesArray = mockData;
         setFilmDetails(moviesArray);
-        setCopiedMoviesArray([...moviesArray]);
+        console.log(moviesArray);
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchData();
-  }, []);
+
+    return () => {
+      console.log("unmounting");
+    };
+  }, [setFilmDetails]);
 
   return (
     <>
-      <FilmDetailsContext.Provider value={copiedMoviesArray}>
-        <MovieSelector /> {/* Use MovieSelector component here */}
-      </FilmDetailsContext.Provider>
       <div className="h-screen p-4 mb-2 overflow-hidden">
         <h2 className="font-bold text-lg mb-5">Film Details</h2>
         <div

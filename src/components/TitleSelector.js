@@ -19,11 +19,11 @@ const MenuProps = {
   },
 };
 
-export default function MultipleSelect() {
+export default function MultipleSelect({ movies }) {
   const theme = useTheme();
   const importedMoviesArray = useContext(FilmDetailsContext);
   const [selectedMovies, setSelectedMovies] = React.useState([]);
-
+  console.log(movies);
   const handleChange = (event) => {
     const {
       target: { value },
@@ -45,7 +45,7 @@ export default function MultipleSelect() {
           input={<OutlinedInput label="Select Movies" />}
           MenuProps={MenuProps}
         >
-          {importedMoviesArray.map((movie) => (
+          {importedMoviesArray?.map((movie) => (
             <MenuItem
               key={movie.title}
               value={movie.title}

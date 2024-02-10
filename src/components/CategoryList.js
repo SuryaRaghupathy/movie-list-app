@@ -1,14 +1,17 @@
 // CategoryList.js
-
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { FilmDetailsContext } from "./Context";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import MovieSelector from "./MovieSelector";
-import FilmDetails from "./FilmDetails";
 
 const CategoryList = () => {
   const [isToggleOn1, setIsToggleOn1] = useState(false);
   const [isToggleOn2, setIsToggleOn2] = useState(false);
+
+  const [movies, setMovies] = useContext(FilmDetailsContext);
+  console.log(movies);
 
   const handleClick1 = () => {
     setIsToggleOn1(!isToggleOn1);
@@ -35,7 +38,8 @@ const CategoryList = () => {
               )}
             </div>
           </div>
-          <MovieSelector /> {/* Use MovieSelector component here */}
+          <MovieSelector movies={movies} />{" "}
+          {/* Use MovieSelector component here */}
         </li>
 
         <hr className="border-black" />
@@ -56,12 +60,12 @@ const CategoryList = () => {
           </div>
           <div
             style={{
-              maxHeight: "80px",
-              overflowY: "hidden",
+              maxHeight: "500px",
+              // overflowY: "hidden",
               paddingRight: "10px",
             }}
           >
-            <FilmDetails /> {/* Use MovieSelector component here */}
+            {/* <FilmDetails /> Use MovieSelector component here */}
           </div>
         </li>
 
