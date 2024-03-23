@@ -5,12 +5,13 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import MovieSelector from "./MovieSelector";
+import YearSelector from "./YearSelector";
 
 const CategoryList = () => {
   const [isToggleOn1, setIsToggleOn1] = useState(false);
   const [isToggleOn2, setIsToggleOn2] = useState(false);
 
-  const [movies, setMovies] = useContext(FilmDetailsContext);
+  const [movies] = useContext(FilmDetailsContext);
   console.log(movies);
 
   const handleClick1 = () => {
@@ -26,7 +27,10 @@ const CategoryList = () => {
       <ul>
         <li>
           <div className="flex my-5">
-            <div className="font-bold text-lg flex-grow">Name</div>
+            <div className="font-bold text-lg flex-grow">
+              {" "}
+              Filter by Movie Name
+            </div>
             <div
               className="flex items-center justify-end"
               onClick={handleClick1}
@@ -38,7 +42,7 @@ const CategoryList = () => {
               )}
             </div>
           </div>
-          <MovieSelector movies={movies} />{" "}
+          {isToggleOn1 && <MovieSelector movies={movies} />}{" "}
           {/* Use MovieSelector component here */}
         </li>
 
@@ -46,7 +50,7 @@ const CategoryList = () => {
 
         <li>
           <div className="flex my-5">
-            <div className="font-bold text-lg flex-grow">Genre</div>
+            <div className="font-bold text-lg flex-grow">Release Year</div>
             <div
               className="flex items-center justify-end"
               onClick={handleClick2}
@@ -65,7 +69,7 @@ const CategoryList = () => {
               paddingRight: "10px",
             }}
           >
-            {/* <FilmDetails /> Use MovieSelector component here */}
+            {isToggleOn2 && <YearSelector movies={movies} />}{" "}
           </div>
         </li>
 

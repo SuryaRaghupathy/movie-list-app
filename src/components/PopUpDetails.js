@@ -10,6 +10,11 @@ import Button from "@mui/joy/Button";
 
 export default function BasicModal({ movieDetails }) {
   const [open, setOpen] = React.useState(false);
+  const [showIframe, setShowIframe] = React.useState(false);
+
+  const handleButtonClick = () => {
+    setShowIframe(true);
+  };
 
   return (
     <React.Fragment>
@@ -23,7 +28,10 @@ export default function BasicModal({ movieDetails }) {
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setShowIframe(false);
+          setOpen(false);
+        }}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -78,20 +86,31 @@ export default function BasicModal({ movieDetails }) {
                     {movieDetails.description}
                   </Typography>
                   <div className=" container item-center justify-center pt-10">
-                    <Button
-                      variant="outlined"
-                      color="neutral"
-                      style={{
-                        maxWidth: "150px",
-                        maxHeight: "300px",
-                        backgroundColor: "#eee477",
-                      }}
-                      onClick={() =>
-                        window.open(movieDetails.imdb_link, "_blank")
-                      }
-                    >
-                      View More
-                    </Button>
+                    {showIframe ? (
+                      <iframe
+                        src={movieDetails.imdb_link}
+                        title="Movie Details"
+                        width="100%"
+                        height="300px"
+                        frameBorder="0"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <Button
+                        variant="outlined"
+                        color="neutral"
+                        style={{
+                          maxWidth: "150px",
+                          maxHeight: "300px",
+                          backgroundColor: "#eee477",
+                        }}
+                        onClick={() =>
+                          window.open(movieDetails.imdb_link, "_blank")
+                        }
+                      >
+                        View More
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>

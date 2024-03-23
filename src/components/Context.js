@@ -1,17 +1,30 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
 const FilmDetailsContext = createContext([]);
+const FilmTitleContext = createContext([]);
+const FilmYearContext = createContext([]);
+
 const FilmDetailsProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
-  console.log(movies);
-
-  // You can use the context here if needed, even though it's not necessary in this example
-
+  console.log(movies); // Define setMoviesList function
+  const [titles, setTitles] = useState([]);
+  console.log(titles);
+  const [years, setYears] = useState([]);
+  console.log(years);
   return (
     <FilmDetailsContext.Provider value={[movies, setMovies]}>
-      {children}
+      <FilmTitleContext.Provider value={[titles, setTitles]}>
+        <FilmYearContext.Provider value={[years, setYears]}>
+          {children}
+        </FilmYearContext.Provider>
+      </FilmTitleContext.Provider>
     </FilmDetailsContext.Provider>
   );
 };
 
-export { FilmDetailsContext, FilmDetailsProvider };
+export {
+  FilmDetailsContext,
+  FilmDetailsProvider,
+  FilmTitleContext,
+  FilmYearContext,
+};

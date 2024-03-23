@@ -5,8 +5,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Button from "@mui/material/Button"; // Added import for Button
-import { FilmTitleContext } from "./Context";
+import { FilmYearContext } from "./Context";
+import Button from "@mui/material/Button";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,7 +22,17 @@ const MenuProps = {
 export default function MultipleSelect({ movies }) {
   const theme = useTheme();
   const [selectedMovies, setSelectedMovies] = React.useState([]);
-  const [selectedTitles, setSelectedTitles] = useContext(FilmTitleContext);
+  const [selectedYear, setSelectedYear] = useContext(FilmYearContext);
+
+  // Filtering logic to remove movies with repeated years
+  const uniqueMovies = movies
+    ? movies
+        .filter(
+          (movie, index, self) =>
+            index === self.findIndex((m) => m.year === movie.year)
+        )
+        .sort((a, b) => a.year - b.year) // Sort in ascending order based on 'year'
+    : [];
 
   const handleChange = (event) => {
     const {
@@ -30,26 +40,25 @@ export default function MultipleSelect({ movies }) {
     } = event;
 
     setSelectedMovies(value);
-    const selectedTitles = value
-      .map((movie) => (movie ? movie.title : null))
+    const selectedYear = value
+      .map((movie) => (movie ? movie.year : null))
       .filter(Boolean);
 
-    const copyOfSelectedTitles = [...(selectedTitles || [])];
+    const copyOfSelectedYears = [...(selectedYear || [])];
 
-    // Log selected titles to console
-    console.log("Selected Titles:", copyOfSelectedTitles);
-    setSelectedTitles(copyOfSelectedTitles);
+    console.log("Selected Years:", copyOfSelectedYears);
+    setSelectedYear(copyOfSelectedYears);
   };
 
   const handleClear = () => {
     setSelectedMovies([]);
-    setSelectedTitles([]); // Clear selected titles when the button is clicked
+    setSelectedYear([]); // Clear selected titles when the button is clicked
   };
 
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <FormControl sx={{ m: 1, width: 300 }} className="flex">
-        <InputLabel id="demo-multiple-movie-label">Select Movies</InputLabel>
+        <InputLabel id="demo-multiple-movie-label">Select Year</InputLabel>
         <Select
           labelId="demo-multiple-movie-label"
           id="demo-multiple-movie"
@@ -59,13 +68,14 @@ export default function MultipleSelect({ movies }) {
           input={<OutlinedInput label="Select Movies" />}
           MenuProps={MenuProps}
         >
-          {movies?.map((movie) => (
+          {uniqueMovies.map((movie) => (
             <MenuItem
-              key={movie?.title}
-              value={movie} // Set the value to the entire movie object
-              style={getStyles(movie?.title, selectedMovies, theme)}
+              key={movie?.id}
+              value={movie}
+              style={getStyles(movie?.year, selectedMovies, theme)}
             >
-              {movie?.title}
+              {movie?.year}
+              {/* Display the year and title in the dropdown */}
             </MenuItem>
           ))}
         </Select>

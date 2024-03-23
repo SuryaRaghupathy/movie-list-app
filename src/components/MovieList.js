@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import FilmDetails from "./FilmDetails";
+import { FilmTitleContext, FilmYearContext } from "./Context";
 
 const MovieList = () => {
-  return (
-    <div className="container overflow-hidden">
-      <FilmDetails />
-    </div>
-  );
+  const [titles] = useContext(FilmTitleContext);
+  const [years] = useContext(FilmYearContext);
+
+  console.log(titles);
+  console.log(years);
+
+  return <FilmDetails titles={titles} years={years} />;
 };
 
 export default MovieList;
